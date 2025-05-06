@@ -1,0 +1,52 @@
+.acceuil-logo{
+  width:auto;
+   margin-left:505px;
+  width: 60%;
+  height: 100%;
+  margin-top: 110px;
+}
+h1{
+  width: 50%;
+  margin-top: 130px;
+  margin-left: 50px;
+  position: absolute;
+  color:#004494;
+  font-weight: bold;
+   display: inline-block;
+   font-size: 43px;
+   font-family:Georgia, 'Times New Roman', Times, serif;
+   
+}
+p{
+  width: 42%;
+  margin-top: 310px;
+  font-family:Georgia, 'Times New Roman', Times, serif ;
+  margin-left: 70px;
+  font-size: 20px;
+  position: absolute;
+   display: inline-block;
+}
+.main{
+background-color: white;
+position: relative;
+padding-left: 0;
+padding-top: 0;
+}
+.container{
+display: flex;
+
+}
+.welcom{
+  height: auto ;
+  font-weight: bold;
+  font-size:20px;
+  background-color: rgb(229, 234, 247);
+  padding: 15px;
+  width:100%;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(10, 68, 163, 0.2);
+  width: 100%;
+  border-radius: 10px;
+  margin-left: 15px;
+  font-family:Georgia, 'Times New Roman', Times, serif ;
+}

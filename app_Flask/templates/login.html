@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Presencia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* Style général */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Bouton pour ouvrir la pop-up */
+        .open-login {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        /* Pop-up */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .popup-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .popup-content h2 {
+            margin-bottom: 20px;
+        }
+
+        .popup-content input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .popup-content button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup-content button:hover {
+            background-color: #0056b3;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bouton pour afficher la pop-up -->
+    <div style="text-align: center;">
+        <a href="#" class="open-login">Se connecter</a>
+    </div>
+
+    <!-- Pop-up -->
+    <div id="loginModal" class="popup">
+        <div class="popup-content">
+            <span class="close" id="closeLogin">&times;</span>
+            <h2>Connexion</h2>
+            <form>
+                <input type="text" placeholder="Nom d'utilisateur" required><br>
+                <input type="password" placeholder="Mot de passe" required><br>
+                <button type="button" onclick="alert('Connexion locale réussie !')">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript pour gérer le pop-up -->
+    <script>
+        // Ouvrir le pop-up
+        document.querySelector('.open-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginModal').style.display = 'block';
+        });
+
+        // Fermer le pop-up
+        document.getElementById('closeLogin').onclick = function() {
+            document.getElementById('loginModal').style.display = 'none';
+        };
+
+        // Fermer en cliquant en dehors
+        window.onclick = function(event) {
+            const modal = document.getElementById('loginModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    </script>
+
+</body>
+</html>

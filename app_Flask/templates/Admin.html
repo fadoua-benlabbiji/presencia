@@ -1,0 +1,41 @@
+{% extends "principale.html" %}
+
+{% block title %}Admin {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='Admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-card">
+    <div class="admin-info">
+        <div class="image-cont">
+            <img src="{{ url_for('static', filename='images/profil.jpg') }}" id="profil" class="admin-img" alt="Photo Admin">
+      
+            <!-- Icône caméra -->
+            <label for="fichier-profil" class="camera-label">
+              <i class="fas fa-camera"></i>
+            </label>
+            <input type="file" id="fichier-profil" accept="image/*" style="display: none;">
+          </div>
+      
+          <div class="admin-detail">
+            <p class="nom">Fadoua Benlabbiji</p>
+            <p class="role">Admin</p>
+          </div>
+    </div>
+</div>
+<div class="info-card">
+  <div class="bloc1">
+    <h3>Informations utilisateur</h3>
+    <p><strong>Nom:</strong> John Doe</p>
+    <p><strong>Email:</strong> john.doe@example.com</p>
+</div>
+<div class="bloc2">
+    <h3>Paramètres</h3>
+    <p><strong>Rôle:</strong> Admin</p>
+    <p><strong>Statut:</strong> Actif</p>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+            color: white;
+            padding: 30px 0;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo img {
+            width: 150px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 30px;
+            margin: 5px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 8px 0 0 8px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #3a7bd5;
+        }
+
+        .nav-item.active::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: -20px;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow: 10px 10px 0 10px rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-item.active::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: -20px;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow: 10px -10px 0 10px rgba(255, 255, 255, 0.9);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h3 {
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #3a7bd5;
+            font-size: 28px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo">
+        </div>
+        
+        <a href="#" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Utilisateurs</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Planning</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-cog"></i>
+            <span>Paramètres</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Déconnexion</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Tableau de Bord</h1>
+            <div class="user-profile">
+                <img src="https://via.placeholder.com/40" alt="Profile">
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Employés</h3>
+                <p>142</p>
+            </div>
+            <div class="card">
+                <h3>Présents</h3>
+                <p>118</p>
+            </div>
+            <div class="card">
+                <h3>Absents</h3>
+                <p>24</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,278 @@
+/* Reset de base */
+@keyframes colorChange {
+    0% {
+      color: rgb(12, 43, 126);
+    }
+    50% {
+      color: rgb(73, 83, 220);
+    }
+    100% {
+      color: rgb(171, 171, 255);
+    }
+  }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corps général */
+body {
+    cursor: default;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #e6f0ff;
+    color: #333;
+}
+
+/* Barre d'en-tête */
+.header {
+    background-color: #fefeff; /* Bleu Technologie */
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centré */
+  margin-top: 20px;
+}
+
+.logo-icon {
+  width: 120px; 
+  height: auto;
+  margin-left: 0%;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: #007BFF; /* Bleu */
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #000000;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #cce6ff;
+}
+
+/* Section Héros */
+.hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url("/static/images/back2.jpg")  ;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    padding: 20px;
+}
+.hero-content {
+    background-color: #fff;
+    background-size: cover;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    max-width: 600px;
+    margin: auto;
+}
+.image-centre {
+    width: 250px; /* adapte la taille */
+    height: auto;
+    display: block;
+    margin: 0 auto 20px auto; /* centre l'image et ajoute un espace en bas */
+    border-radius: 100%; /* image ronde si tu veux */
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.btn {
+    background-color: #004494;
+    padding: 12px 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #003366;
+}
+
+/* Pied de page */
+.footer {
+    background-color: white;
+    text-align: center;
+    padding: 15px;
+    color: #033889;
+    font-size: 0.9rem;
+}
+.p {
+    font-style: italic;
+
+}
+/* Style du fond assombri */
+/* Pop-up */
+.popup {
+    position: fixed;
+    z-index: 99999;  /* Assurez-vous que la pop-up soit bien au-dessus */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+/* Contenu de la pop-up */
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    height: 520px;
+    max-width: 400px;
+    margin: 6% auto;
+    text-align: center;
+}
+
+/* Bouton de fermeture */
+.close {
+    position: absolute;
+    z-index: 99999;  /* Augmenter le z-index */
+    right: 15px;
+    top: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #000000;  /* Changer la couleur du bouton */
+    cursor: pointer;
+}
+
+/* Image de la pop-up */
+.popup-image {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+
+.popup-content h2 {
+    color: #000000;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 10 px;
+    text-align: center;
+}
+/* Bouton de fermeture */
+
+.popup-content form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+/* Style des labels */
+form label {
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 4px;
+    margin-left: 5px;
+    font-size: 14px;           /* Taille du texte */
+  }
+
+  /* Style des champs de saisie */
+  form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;     /* Bordure grise claire */
+  }
+  form input[type="submit"] {
+    background-color: #1766d6; /* Bleu principal */
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    
+}
+.forgot-password {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    font-size: 13px;
+    color: #007BFF;
+    text-decoration: none;
+    text-align: left;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.alert {
+    font-size: 14px;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+  
+  .alert.danger {
+    color: #ee0b22;
+    background-color: #f4cbce;
+    border: 1px solid #f7a0a8;
+  }
+  
+ 

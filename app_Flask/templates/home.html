@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue - Gestion de Présence</title>
+      <!-- Charger Font Awesome AVANT votre CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+      <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    </head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="static/images/logo.png" alt="Logo" class="logo-icon">
+            
+          </div>
+     
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Connexion</a></li>
+                <li><a href="#">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <!-- Image au centre -->
+           
+            
+            <!-- Texte -->
+            <h1>Bienvenue sur Presencia</h1>
+            <p>Application de gestion de présence basée sur la reconnaissance faciale.</p>
+            
+            <a href="#" class="btn" id="openLogin">Se connecter</a>
+
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <p>&copy; 2025 Presencia. Tous droits réservés.</p>
+    </footer>
+    <!-- Pop-up de connexion -->
+<div id="loginModal" class="popup" style="display: none;">
+    <div class="popup-content">
+        <span class="close" id="closeLogin">&times;</span>
+       <img src="static\images\login logo.jpg" alt="Image" class="popup-image">
+       <h2 class="conn">Connexion</h2><br>
+       
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category, message in messages %}
+    <p class="alert {{ category }}">{{ message }}</p>
+  {% endfor %}
+{% endif %}
+{% endwith %} 
+       {% if success %}
+       <p class="alert success" id="successMessage">Connexion réussie ! </p>
+       <script>
+           // Redirection après 3 secondes
+           setTimeout(function() {
+               window.location.href = "{{ url_for('principale') }}"; // remplace 'principale' par le bon nom de route
+           }, 380);
+
+       </script>
+       {% endif %}
+   
+
+       <form method="POST" action="/login">
+          <label for="username">Username</label> 
+          <input type="text" name="username" placeholder="Username" required><br>
+          <label for="password">Mot de passe</label> 
+          <div class="password-wrapper">
+            <input type="password" id="password" name="password" placeholder="Mot de passe">
+             <i class="fa-solid fa-eye toggle-password"  id="togglePassword" ></i>
+          </div>
+        
+        <!-- Lien mot de passe oublié -->
+         <a href="/mot-de-passe-oublie" class="forgot-password">Mot de passe oublié ?</a><br>
+        <input type="submit" value="Envoyer">
+      </form>
+      
+    </div>
+  </div>
+
+  
+  <script>
+    // Ouvrir la pop-up
+    document.getElementById('openLogin').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('loginModal').style.display = 'block';
+    });
+
+    // Fermer la pop-up avec le X
+    document.getElementById('closeLogin').addEventListener('click', function() {
+        document.getElementById('loginModal').style.display = 'none';
+    });
+
+    // Fermer la pop-up en cliquant en dehors
+    window.onclick = function(event) {
+        const modal = document.getElementById('loginModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+
+    // Fonction pour basculer l'affichage du mot de passe
+    document.getElementById('togglePassword').addEventListener('click', function(e) {
+        e.preventDefault();
+        const input = document.getElementById("password");
+        const icon = this;
+        if (input.type === "password") {
+            input.type = "text";  // Afficher le mot de passe
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";  // Masquer le mot de passe
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    });
+
+    // Attendre que le DOM soit prêt
+    document.addEventListener('DOMContentLoaded', function () {
+        // Écouter la saisie dans les champs de mot de passe et de nom d'utilisateur
+        const usernameField = document.querySelector('input[name="username"]');
+        const passwordField = document.querySelector('input[name="password"]');
+        const errorMessages = document.querySelectorAll('.alert'); // Messages d'erreur
+
+        // Fonction pour effacer les messages d'erreur
+        function clearErrorMessages() {
+            errorMessages.forEach(function (message) {
+                message.style.display = 'none';  // Masquer tous les messages d'erreur
+            });
+        }
+
+        // Écouter la saisie dans le champ 'username' et 'password'
+        usernameField.addEventListener('input', clearErrorMessages);
+        passwordField.addEventListener('input', clearErrorMessages);
+
+        // Afficher la pop-up si nécessaire
+        {% if show_login_popup or success %}
+            document.getElementById('loginModal').style.display = 'block';
+        {% endif %}
+    });
+
+    // Lorsque la pop-up se ferme, on efface les messages flash
+    document.getElementById('closeLogin').addEventListener('click', function() {
+        const modal = document.getElementById('loginModal');
+        modal.style.display = 'none';  // Fermer la pop-up
+        // Effacer les messages d'erreur si existants
+        const errorMessages = document.querySelectorAll('.alert');
+        errorMessages.forEach(function(message) {
+            message.style.display = 'none';  // Masquer le message
+        });
+    });
+    
+    // Lorsque l'utilisateur commence à taper, on efface le message d'erreur
+    const passwordField = document.getElementById("password");
+    passwordField.addEventListener("input", function() {
+        const errorMessage = document.querySelector(".alert.danger");
+        if (errorMessage) {
+            errorMessage.style.display = "none";  // Masquer le message d'erreur
+        }
+    });
+</script>
+
+
+</body>
+</html>

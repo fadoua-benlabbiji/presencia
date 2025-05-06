@@ -1,0 +1,66 @@
+.admin-card {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .admin-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .admin-img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 60px 0 50px;
+    border: 2px solid #000000;
+  }
+  .nom{
+        font-size: 30px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color:#000000 ;
+  }
+  
+.camera-label {
+    position: absolute;
+  bottom: 3px;
+  left: 60%;
+    margin-top: 5px;
+    cursor: none;
+    color: #000000;
+    font-size: 18px;
+    transition: color 0.3s ease;
+  }
+ 
+  .image-cont{
+     position: relative;
+     display: inline-block;
+  }
+  .info-card {
+   margin-top: 15px;
+   text-align: center;
+  }
+  .bloc1{
+    margin-left: 20px;
+    display: inline-block;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    width: 30%;
+    height: 500px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .bloc2{
+    display: inline-block;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-left: 20px;
+    width: 60%;
+    height: 500px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
