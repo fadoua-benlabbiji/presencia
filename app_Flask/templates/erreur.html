@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue - Gestion de Présence</title>
+      <!-- Charger Font Awesome AVANT votre CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+      <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+     <style>
+        .footer{
+            position: absolute; 
+            bottom: 0;
+            width: 100%;
+
+        }
+        .reset-pwd{
+
+            margin-top: 30px;
+            position: absolute;
+             left: 33%;
+            height: 500px;
+            width: 500px;
+            background-color: white;
+        }
+        .logo-erreur{
+            position: relative; width: 180px; height: 130px;margin-left: 160px;
+           margin-top: 30px;
+        }
+    
+     
+   .annule{
+   text-decoration: none;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 800px ;
+    background-color:rgb(253, 255, 255);
+    color:rgb(0, 0, 0);
+    border: 2px solid  rgb(0, 0, 0);;
+    border-radius: 4px;
+    cursor: pointer;
+   }
+   .explication {
+    text-align: center;
+    margin-top: 8px;
+
+   }
+   .erreur{
+    font-weight: bold;
+    font-size: 25px;
+    color: red;
+    margin-top: 30px;
+    text-align: center;
+   }
+   .reset-pwd{
+     width: 550px;
+     height: 400px;
+   }
+     </style>
+    </head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="static/images/logo.png" alt="Logo" class="logo-icon">
+            
+          </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Connexion</a></li>
+                <li><a href="#">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="contenu">
+         <div class="reset-pwd">
+            <img src="static/images/erreur.jpg" alt="Logo" class="logo-erreur">
+
+            <div class="erreur">Erreur! Cette adresse e-mail n'existe pas.</div>
+            <div class="explication">L'adresse e-mail que vous avez saisie ne correspond à aucune adresse enregistrée parmi les administrateurs. Veuillez vérifier et réessayer.</div>
+            <div style="margin-left: 330px; margin-top:50px;"> <a href="/" class="annule">Quitter</a><a href="/oublier" class="annule">Réessayer</a>
+         </div>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 Presencia. Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>

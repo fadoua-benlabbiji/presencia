@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Test animation CSS</title>
+<style>
+  .btn-start, .btn-stop {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    margin-right: 10px;
+    display: inline-block;
+    text-decoration: none;
+    background-color: #28a745;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-stop {
+    background-color: #dc3545;
+  }
+
+  .btn-start:hover {
+    animation: pulse-green 1.5s infinite;
+  }
+
+  .btn-stop:hover {
+    animation: pulse-red 1.5s infinite;
+  }
+
+  @keyframes pulse-green {
+    0% {
+      box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 10px 10px rgba(40, 167, 69, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+  }
+
+  @keyframes pulse-red {
+    0% {
+      box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 10px 10px rgba(220, 53, 69, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+  }
+</style>
+</head>
+<body>
+<a href="#" class="btn-start">Start</a>
+<a href="#" class="btn-stop">Stop</a>
+</body>
+</html>

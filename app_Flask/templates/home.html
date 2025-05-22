@@ -68,16 +68,16 @@
    
 
        <form method="POST" action="/login">
-          <label for="username">Username</label> 
+          <label for="username">Email</label> 
           <input type="text" name="username" placeholder="Username" required><br>
           <label for="password">Mot de passe</label> 
           <div class="password-wrapper">
-            <input type="password" id="password" name="password" placeholder="Mot de passe">
-             <i class="fa-solid fa-eye toggle-password"  id="togglePassword" ></i>
+            <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+             <i class="fa-solid fa-eye toggle-password"  id="togglePassword"  onclick="togglePassword()"></i>
           </div>
         
         <!-- Lien mot de passe oublié -->
-         <a href="/mot-de-passe-oublie" class="forgot-password">Mot de passe oublié ?</a><br>
+         <a href="/oublier" class="forgot-password">Mot de passe oublié ?</a><br>
         <input type="submit" value="Envoyer">
       </form>
       
@@ -106,20 +106,20 @@
     };
 
     // Fonction pour basculer l'affichage du mot de passe
-    document.getElementById('togglePassword').addEventListener('click', function(e) {
-        e.preventDefault();
-        const input = document.getElementById("password");
-        const icon = this;
-        if (input.type === "password") {
-            input.type = "text";  // Afficher le mot de passe
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
-        } else {
-            input.type = "password";  // Masquer le mot de passe
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
-        }
-    });
+    function togglePassword() {
+    const input = document.getElementById("password");
+    const icon = document.getElementById("togglePassword");
+
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  }
 
     // Attendre que le DOM soit prêt
     document.addEventListener('DOMContentLoaded', function () {

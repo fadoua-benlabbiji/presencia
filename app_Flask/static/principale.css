@@ -29,7 +29,7 @@
     width: 150px;
     height: auto       /* espace du haut */
   }
-  
+
   .menu-fonct {
     margin: 20px 0;
     padding: 10px 0px 15px 10px;
@@ -47,5 +47,21 @@
     color: #004494;
   
   }
-  
-  
+  .sous-menu{
+    display: block;
+    color: #004494;
+    margin-bottom:5px;
+    background-color: white;
+   font-size: 12px;
+    padding: 8px 0px 8px ;
+  text-decoration: none;
+  border-radius: 10px;
+  margin-left: 20px;
+  text-align: center;
+    transition: background-color 0.3s ease;
+}
+.sous-menu:hover {
+  background-color: #80acdf;
+  color: white;
+  box-shadow: 0 3px 8px rgba(31, 95, 166, 0.5);
+}

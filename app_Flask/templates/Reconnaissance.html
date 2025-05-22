@@ -1,0 +1,66 @@
+{% extends "principale.html" %}
+
+{% block title %}reconnaissance {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='Reconnaissance.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Système de Reconnaissance Faciale</h1>
+<div class="contenu">
+    <div id="video">
+        <img src="/video" alt="Flux vidéo" width="670" height="500">
+    </div>
+
+    <div class="actions">
+        <a href="/start" class="btn-start"><i class="fas fa-play"></i>&nbsp;&nbsp;Start</a>
+        <a href="/stop" class="btn-stop"><i class="fas fa-stop"></i>&nbsp;&nbsp;Stop</a>
+        <div class="info">
+            <h4>Informations du Visiteur</h4>
+              <ul>
+            <li><i class="fas fa-user"></i> Nom : <span id="nom"></span></li>
+            <li><i class="fas fa-user"></i> Prenom : <span id="prenom"></span></li>
+            <li><i class="fas fa-id-card"></i> Matricule : <span id="id"></span></li>
+            <li><i class="fas fa-building"></i> Poste : <span id="departement"></span></li>
+            <li><i class="fas fa-clock"></i> Heure d’entrée : <span id="heure"></span></li>
+            <li><i class="fas fa-calendar"></i> Date : <span id="date"></span></li>
+             </ul>
+        </div>
+    </div>
+</div>
+<script>
+setInterval(() => {
+    fetch('/employe_infos')
+    .then(response => {
+        if (!response.ok) throw new Error("Pas d'employé détecté ou erreur");
+        return response.json();
+    })
+    .then(data => {
+        document.getElementById('nom').textContent = data.nom || '';
+        document.getElementById('prenom').textContent = data.prenom || '';
+        document.getElementById('id').textContent = data.matricule || '';
+        document.getElementById('departement').textContent = data.poste || '';
+
+        const now = new Date();
+        document.getElementById('heure').textContent = now.toLocaleTimeString();
+        document.getElementById('date').textContent = now.toLocaleDateString();
+    })
+    .catch(err => {
+        console.log(err);
+        // Affichage par défaut quand aucun employé trouvé
+        document.getElementById('nom').textContent = 'Inconnu';
+        document.getElementById('prenom').textContent = '';
+        document.getElementById('id').textContent = '';
+        document.getElementById('departement').textContent = '';
+        document.getElementById('heure').textContent = '';
+        document.getElementById('date').textContent = '';
+    });
+},900);
+
+</script>
+
+{% endblock %}

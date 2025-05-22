@@ -3,22 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <title>Application de gestion de présence</title>
-  <link rel="stylesheet" href="static/principale.css">
+ <link rel="stylesheet" href="{{ url_for('static', filename='principale.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  {% block extra_css %}
-  {% endblock %}
+  {% block extra_css %}{% endblock %}
 </head>
 <body>
   <div class="menu">
     <div class="logo">
-      <img src="static/images/logoblanc.png" alt="Logo" class="logo-icon">
+    <img src="{{ url_for('static', filename='images/logoblanc.png') }}" alt="Logo" class="logo-icon">
       
-    </div>
-    <a class="menu-fonct" href="/acceuil"><i class="fas fa-home"></i>&nbsp;&nbsp; Accueil</a>
-    <a class="menu-fonct" href="/Admin"><i class="fas fa-user-shield"></i>&nbsp;&nbsp; Admin</a>
-    <a class="menu-fonct" href="/historique"><i class="fas fa-clock"></i>&nbsp;&nbsp; Historique des présences</a>
-    <a class="menu-fonct" href="/employes"><i class="fas fa-users"></i>&nbsp;&nbsp; Gestion des employés</a>
-    <a class="menu-fonct" href="/reconnaissance"><i class="fas fa-camera"></i>&nbsp;&nbsp; Reconnaissance faciale</a>
+    </div >
+    <a class="menu-fonct {% if request.path == '/acceuil' %}active{% endif %}" href="/acceuil"><i class="fas fa-home"></i>&nbsp;&nbsp; Accueil</a>
+    <a class="menu-fonct {% if request.path == '/Admin' %}active{% endif %}" href="/Admin"><i class="fas fa-user-shield"></i>&nbsp;&nbsp; Admin</a>
+    <a class="menu-fonct {% if request.path == '/#' %}active{% endif %}" href="#" onclick="toggleSousMenu('sousMenu1')"><i class="fas fa-clock"></i>&nbsp;&nbsp; Gestion des présences</a>
+    <div id="sousMenu1"  style="display:none; margin-left: 15px; margin-right: 8px; margin-top: 0px;">
+           <a class="sous-menu" href="/historique/liste">Liste des présences</a>
+           <a class="sous-menu" href="/historique/ajouter">Statistiques</a>
+        </div>
+    <a class="menu-fonct {% if request.path == '/Employes' %}active{% endif %}" href="/Employes"  style="margin-bottom: 6px;"><i class="fas fa-users"></i>&nbsp;&nbsp; Gestion des employés</a>
+    <a class="menu-fonct {% if request.path == '/reconnaissance' %}active{% endif %}" href="/reconnaissance"><i class="fas fa-camera"></i>&nbsp;&nbsp; Reconnaissance faciale</a>
     <a class="menu-fonct" href="/"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Déconnexion</a>
   </div>
 
@@ -28,5 +31,15 @@
       <!-- Le contenu des pages ira ici -->
       {% endblock %}
   </div>
+  <script>
+    function toggleSousMenu(id){
+      const menu=document.getElementById(id);
+      if(menu.style.display==="none"){
+         menu.style.display = "block";
+      }else{
+         menu.style.display = "none";
+      }
+    }
+  </script>
 </body>
 </html>

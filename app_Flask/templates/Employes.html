@@ -1,0 +1,256 @@
+{% extends "principale.html" %}
+
+{% block title %}reconnaissance {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='Employes.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="header">
+<h1>Liste des employés</h1>
+<div class="search">
+    <input type="text" placeholder="Rechercher" id="searchInput" onkeyup="searchEmployee()">
+    <i class='fas fa-search'></i>
+</div>
+</div>
+<div class="boutons">
+  <a class="btn-ajouter" href="#" id="openmodal"><i class="fas fa-user-plus" ></i> Nouveau Employé</a>
+  <a class="btn-importer" href="/export_excel"><i class="fas fa-file-excel"></i> Exporter (Excel)</a>
+</div>
+
+ <table style="height: 300px; overflow-y: auto;">
+  <thread>
+  <tr>
+    <th>N°</th>
+    <th>Photo</th>
+    <th>Matricule</th>
+    <th>Nom</th>
+    <th>Prenom</th>
+    <th>Email</th>
+    <th>Téléphone</th>
+    <th>Poste</th>
+    <th>Date d'embauche</th>
+    <th>Statut</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+      {% set i = namespace(value=1) %}
+
+
+    {% for emp in employes %}
+  
+    <tr>
+       <td>{{i.value}}</td>
+       <td> <img src="{{ url_for('static', filename='images/'+ (emp.photo if emp.photo else 'profil.jpg'))}}" width="40"  height="40" style="border-radius: 50%;" class="profil"></td>
+        <td>{{ emp.matricule }}</td>
+        <td>{{ emp.nom }}</td>
+        <td>{{ emp.prenom }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.telephone }}</td>
+        <td>{{ emp.poste }}</td>
+        <td>{{ emp.date_embauche }}</td>
+        <td class="{%if emp.statut=='actif'%} 
+                      statut-actif
+                   {%elif emp.statut=='en congé'%} 
+                      statut-conge 
+                   {%elif emp.statut =='inactif'%} 
+                      statut-inactif  
+                   {%endif%} " >{{ emp.statut }}</td> 
+        <td>
+    <button 
+  class="btn-modifier"
+  data-matricule="{{ emp.matricule }}"
+  data-nom="{{ emp.nom }}"
+  data-prenom="{{ emp.prenom }}"
+  data-email="{{ emp.email }}"
+  data-telephone="{{ emp.telephone }}"
+  data-poste="{{ emp.poste }}"
+  data-date_embauche="{{ emp.date_embauche }}"
+  data-statut="{{ emp.statut }}"
+  data-photo_url="{{ url_for('static', filename='images/' + (emp.photo if emp.photo else 'profil.jpg')) }}"
+  onclick="ouvrirPopupModif(this)"
+  style="border:none; background:none; cursor:pointer;">
+  <i class="fa fa-edit" style="color:blue; font-size: 17px;">&nbsp;&nbsp;</i>
+</button>
+
+     <a href="#" onclick="confirmSup('{{emp.matricule}}')" class="Supprimer"><i class="fa fa-trash" style="color:red;"></i></a>
+    </td> 
+    </tr>
+     {% set i.value = i.value + 1 %}
+    {%endfor%}
+  <div id="popup-confirmation" class="pop">
+  <div class="pop-content">
+    <p>Voulez-vous vraiment supprimer cet employé ?</p>
+    <button class="oui" onclick="confirmerSuppression()">Oui</button>
+    <button class="non" onclick="fermerPopup()">Non</button>
+  </div>
+</div> 
+<!-- Popup ajout -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Ajouter un nouveau employé</h2>
+    <span class="close">&times;</span>
+    <h2>Ajouter un nouvel employé</h2>
+    <form>
+      <div class="form-group">
+        <label for="image">Photo :</label>
+        <input type="file" id="image" name="image">
+      </div>
+      <div class="form-group">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom">
+      </div>
+      <div class="form-group">
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom">
+      </div>
+      <div class="button-group">
+        <button type="submit" class="btn-add">Ajouter</button>
+        <button type="button" class="btn-cancel">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Popup Modification Employé -->
+<div id="popup-modif" class="pop_modif" style="display: none;">
+  <div class="pop-cont">
+    <span onclick="fermerPopupModif()" style="float:right; cursor:pointer;">&times;</span>
+    <h2>Modifier Employé</h2>
+    <form id="form-modif" method="POST" action="/modifier_emp" enctype="multipart/form-data">
+    <label for="modif-photo">
+  <img id="photo-modif" src="" width="80"   style="margin:10px auto; border-radius:50%; display:block; cursor:pointer;" title="Cliquer pour modifier la photo">
+</label>
+<input type="file" name="photo" id="modif-photo" style="display: none;" accept="image/*">
+      <input type="hidden" name="matricule" id="modif-matricule">
+      <label>Nom</label>
+      <input type="text" name="nom" id="modif-nom"><br>
+
+      <label>Prénom</label>
+      <input type="text" name="prenom" id="modif-prenom"><br>
+
+      <label>Email</label>
+      <input type="email" name="email" id="modif-email"><br>
+
+      <label>Téléphone</label>
+      <input type="text" name="telephone" id="modif-telephone"><br>
+
+      <label>Poste</label>
+      <input type="text" name="poste" id="modif-poste"><br>
+
+      <label>Date d'embauche</label>
+      <input type="date" name="date_embauche" id="modif-date_embauche"><br>
+
+      <label>Statut</label>
+      <select name="statut" id="modif-statut">
+        <option value="actif">Actif</option>
+        <option value="en congé">En congé</option>
+        <option value="inactif">Inactif</option>
+      </select><br><br>
+<div class="btns-popup">
+  <button type="submit" class="oui">Enregistrer</button>
+  <button type="button" onclick="fermerPopupModif()" class="non">Annuler</button>
+</div>
+    </form>
+  </div>
+</div>
+
+  </tbody>
+ </table>
+<script>
+  let matriculeASupprimer = "";
+
+  function confirmSup(matricule) {
+    mat = matricule;
+    document.getElementById("popup-confirmation").style.display = "flex";
+  }
+
+  function fermerPopup() {
+    document.getElementById("popup-confirmation").style.display = "none";
+  }
+
+  function confirmerSuppression() {
+    window.location.href = "/supprimer/" + mat;
+  }
+  
+</script>
+<script>
+function searchEmployee() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const rows = document.querySelectorAll("table tbody tr");
+
+  rows.forEach(row => {
+    const rowText = row.innerText.toLowerCase();
+    row.style.visibility = rowText.includes(input) ? "visible" : "hidden";
+  });
+}
+</script>
+<script>
+function ouvrirPopupModif(button) {
+  // Récupérer les données depuis les attributs data-*
+  document.getElementById("modif-matricule").value = button.dataset.matricule;
+  document.getElementById("modif-nom").value = button.dataset.nom;
+  document.getElementById("modif-prenom").value = button.dataset.prenom;
+  document.getElementById("modif-email").value = button.dataset.email;
+  document.getElementById("modif-telephone").value = button.dataset.telephone;
+  document.getElementById("modif-poste").value = button.dataset.poste;
+  document.getElementById("modif-date_embauche").value = button.dataset.date_embauche;
+  document.getElementById("modif-statut").value = button.dataset.statut;
+  document.getElementById("photo-modif").src = button.dataset.photo_url;
+  // Afficher le popup
+  document.getElementById("popup-modif").style.display = "block";
+  document.body.style.overflow = "hidden"; // bloque le scroll de la page principale
+}
+
+function fermerPopupModif() {
+  document.getElementById("popup-modif").style.display = "none";
+  document.body.style.overflow = "auto"; // réactive le scroll de la page principale
+
+}
+document.addEventListener('DOMContentLoaded', function() {
+  const popup = document.getElementById('popup-modif');
+  const popupContent = popup.querySelector('.pop-cont');
+
+  popup.addEventListener('click', function(event) {
+    // Si clic en dehors du contenu (pop-cont)
+    if (!popupContent.contains(event.target)) {
+      fermerPopupModif();
+    }
+  })
+});
+function fermerPopupModif() {
+  document.getElementById('popup-modif').style.display = 'none';
+}
+</script>
+<script>
+    document.getElementById('modif-photo').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const img = document.getElementById('photo-modif');
+            img.src = URL.createObjectURL(file);
+        }
+    });
+ document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById("myModal");
+    const btn = document.getElementById("openmodal");
+    const span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function(event) {
+      event.preventDefault();
+      modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  });
+</script>
+{% endblock %}

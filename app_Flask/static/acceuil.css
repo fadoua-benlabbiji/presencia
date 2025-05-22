@@ -29,8 +29,9 @@ p{
 .main{
 background-color: white;
 position: relative;
-padding-left: 0;
-padding-top: 0;
+padding-left: 8px;
+padding-top: 0px;
+padding-right: 8px;
 }
 .container{
 display: flex;
@@ -39,14 +40,13 @@ display: flex;
 .welcom{
   height: auto ;
   font-weight: bold;
-  font-size:20px;
-  background-color: rgb(229, 234, 247);
+  font-size:22px;
+  background-color: rgb(218, 226, 247);
   padding: 15px;
   width:100%;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(10, 68, 163, 0.2);
+  box-shadow: 0 4px 10px rgba(10, 68, 163, 0.3);
   width: 100%;
   border-radius: 10px;
-  margin-left: 15px;
   font-family:Georgia, 'Times New Roman', Times, serif ;
 }
