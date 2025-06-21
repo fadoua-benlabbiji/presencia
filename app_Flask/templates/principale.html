@@ -13,13 +13,13 @@
     <img src="{{ url_for('static', filename='images/logoblanc.png') }}" alt="Logo" class="logo-icon">
       
     </div >
+   <div class="adminProfil">
+  <img src="{{ url_for('static', filename='images/' + (admin.photo if admin.photo else 'profil.jpg')) }}" alt="Logo" class="logo-admin">
+    </div>
+    <h3 id="nomAdmin">{{admin.username}}</h3>
     <a class="menu-fonct {% if request.path == '/acceuil' %}active{% endif %}" href="/acceuil"><i class="fas fa-home"></i>&nbsp;&nbsp; Accueil</a>
     <a class="menu-fonct {% if request.path == '/Admin' %}active{% endif %}" href="/Admin"><i class="fas fa-user-shield"></i>&nbsp;&nbsp; Admin</a>
-    <a class="menu-fonct {% if request.path == '/#' %}active{% endif %}" href="#" onclick="toggleSousMenu('sousMenu1')"><i class="fas fa-clock"></i>&nbsp;&nbsp; Gestion des présences</a>
-    <div id="sousMenu1"  style="display:none; margin-left: 15px; margin-right: 8px; margin-top: 0px;">
-           <a class="sous-menu" href="/historique/liste">Liste des présences</a>
-           <a class="sous-menu" href="/historique/ajouter">Statistiques</a>
-        </div>
+    <a class="menu-fonct {% if request.path == '/#' %}active{% endif %}" href="/listePresence" ><i class="fas fa-clock"></i>&nbsp;&nbsp; Gestion des présences</a>
     <a class="menu-fonct {% if request.path == '/Employes' %}active{% endif %}" href="/Employes"  style="margin-bottom: 6px;"><i class="fas fa-users"></i>&nbsp;&nbsp; Gestion des employés</a>
     <a class="menu-fonct {% if request.path == '/reconnaissance' %}active{% endif %}" href="/reconnaissance"><i class="fas fa-camera"></i>&nbsp;&nbsp; Reconnaissance faciale</a>
     <a class="menu-fonct" href="/"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Déconnexion</a>
@@ -42,4 +42,5 @@
     }
   </script>
 </body>
+
 </html>

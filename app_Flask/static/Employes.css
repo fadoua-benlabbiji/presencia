@@ -85,6 +85,7 @@ background-color: rgb(1, 210, 47);
   cursor: pointer;
 }
 table{
+  
   margin-left: 15px;
   margin-top: 120px;
   width: 98%;
@@ -103,7 +104,7 @@ th{
   object-fit: cover;   /* ajuste l'image pour remplir le cadre sans déformation */
 }
 td{
- height: 60px;   
+ height: 60px !important;   
  margin: 3px 0;
  vertical-align: middle;
  text-align: center;
@@ -156,26 +157,34 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
+   display: flex; /* Ajouté pour le centrage */
+  justify-content: center; /* Centre horizontal */
+  align-items: center;
   overflow: auto; /* permet de scroller dans le popup si le contenu est grand */
   background-color: rgba(0, 0, 0, 0.5); /* fond gris semi-transparent */
+   backdrop-filter: blur(5px);
   z-index: 1000; /* s'affiche au-dessus des autres éléments */
 }
 
 
 .pop-cont {
-   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  left: 33%;
   background-color: #ffffff;
   border-radius: 20px;
   padding: 30px;
   width: 550px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  position: relative;
+   border-radius: 12px;
+ box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   font-family: 'Segoe UI', sans-serif;
+  z-index: 1001;
+  
+  /* Nouvelle animation compatible */
+  animation: modalOpen 0.4s ease-out forwards;
 }
 .btns-popup {
   display: flex;
+  margin-left: 30px;
   justify-content: center; /* pour les centrer */
   gap: 10px; /* espace entre les boutons */
 }
@@ -273,19 +282,32 @@ body {
   width: 100%; height: 100%; /* prend toute la fenêtre */
   background-color: rgba(0,0,0,0.5); /* fond noir transparent */
   overflow: auto; /* scroll si besoin */
+  padding: 0;
+  margin: 0;
 }
 
 .modal-content {
+  margin-top: 5px !important;
   background-color: white;
-  margin-left: 25% ; /* centré verticalement et horizontalement */
-  margin-top:30px ;
+  margin-left: 27% ; /* centré verticalement et horizontalement */
+  margin-top: 0px;
   padding: 20px;
   border-radius: 6px;
   width: 900px;
   height: 700px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+  top: 0;
 }
-
+#noResultsMessage{
+  display: none;
+  color: gray;
+  margin-top: 20px;
+  height: 100px;           /* hauteur fixe */
+  display: flex;           
+  justify-content: center; /* centre horizontalement */
+  align-items: center;     /* centre verticalement */
+}
 .close {
   color: #aaa;
   position: absolute;
@@ -345,4 +367,209 @@ body {
   font-weight: bold;
   color: #444;
   margin-bottom: 5px;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: white;
+  margin: 5% auto;
+  width: 700px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  overflow: hidden;
+  animation: modalOpen 0.4s ease-out;
+}
+
+@keyframes modalOpen {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  padding: 15px 25px;
+  background:#0066cc;
+  color: white;
+   box-shadow: 0 4px 10px rgba(10, 68, 163, 0.5);
+   border-radius: 12px;
+}
+
+.modal-header h2 {
+ margin-left: 140px;
+  font-weight: 600;
+}
+
+.close:hover {
+  transform: rotate(90deg);
+}
+
+.employee-form {
+  padding: 20px 25px;
+}
+
+.form-columns {
+  display: flex;
+  gap: 30px;
+}
+
+.form-column {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-left:2px;
+  margin-bottom: 8px;
+  font-weight: 500;
+  border-radius: 12px;
+  color: #050505;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+  background-color: #f9f9f9;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+  outline: none;
+  background-color: white;
+}
+
+.photo-upload {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.photo-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 3px solid #e0e0e0;
+}
+
+.photo-preview i {
+  font-size: 40px;
+  color: #aaa;
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.upload-btn:hover{
+  background: #0066cc;
+  color: white;
+}
+p:hover{
+   background: #0066cc;
+  color: white; 
+}
+.upload-btn i {
+  margin-right: 5px;
+  color: #000000;
+}
+.upload-btn p {
+   display: inline;
+  color: #000000;
+  font-weight: bold;
+}
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.btn-cancel, .btn-add {
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.4s;
+  display: inline;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-cancel {
+   margin-left: 280px;
+  background: #f5f5f5;
+  color: #0553b9;
+  font-weight: bold;
+  width: 180px;
+  border: 1px solid #ddd;
+}
+
+.btn-cancel:hover {
+  background: #e0e0e0;
+}
+
+.btn-add {
+  background:#0066cc;
+  color: white;
+    font-weight: bold;
+  border: none;
+}
+
+.btn-add:hover {
+  background: linear-gradient(135deg, #0052a3, #003366);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,102,204,0.2);
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 8px 15px;
+  background:white;
+  border: 2px solid #000000 ;
+  color:#000000 ;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px;
+}
+.upload-btn:hover i {
+  background-color: #0066cc; /* Nouvelle couleur de l'icône */
+  color: white;
+}
+
+.upload-btn:hover p {
+  color: #ffffff; /* Nouvelle couleur du texte */
+  /* Optionnel: soulignement */
 }

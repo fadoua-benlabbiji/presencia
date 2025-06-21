@@ -1,22 +1,32 @@
 import cv2
 import numpy as np
-#import face_recognition
-import os
-path ='Personnes' #définit simplement le chemin
-images=[]
-classNames=[]
-personsList=os.listdir(path)#Liste les fichiers dans un répertoire donné.
-print(path)
-camera=cv2.VideoCapture(0)
-while True :
-    ret ,frame =camera.read()
-    if not ret : 
+import cv2
+
+# Ouvrir la webcam
+cap = cv2.VideoCapture(0)
+if not cap.isOpened():
+    print("Erreur: Impossible d'ouvrir la webcam.")
+    exit()
+
+while True:
+    # Acquisition de l'image
+    ret, frame = cap.read()
+    
+     # Vérifier si l'acquisition de l'image a réussi
+    if not ret:
+        print("Erreur: Impossible de capturer l'image.")
         break
-    frame=cv2.flip(frame,1)
-    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    cv2.imshow("Webcam",frame)
-    if cv2.waitKey(1) & 0xff == ord('q'):
+    
+    # Afficher l'image acquise
+    cv2.imshow("Image", frame)
+    
+    # Quitter la boucle si l'utilisateur appuie sur la touche 'q'
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-camera.release()
+
+# Fermer la fenêtre d'affichage
 cv2.destroyAllWindows()
+# Libérer la ressource de la webcam
+cap.release()
+
 

@@ -19,63 +19,66 @@
             margin-top: 50px;
             position: absolute;
              left: 33%;
-            height: 420px;
+            height: 450px;
             width: 500px;
             background-color: white;
         }
         .logo-pwd{
-            position: relative; width: 180px; height: 100px;margin-left: 150px;
-           margin-top: 40px;
+            position: relative; width: 150px; height: 130px;margin-left: 170px;
+           margin-top: 5px;
         }
         h2{
             size: 5px;
             color: rgb(0, 0, 0);
             text-align: center;
+            margin-bottom: 20px;
           
         }
         p{
             margin-top: 20px !important;
         }
-        .code {
-    width: 50%;
-    margin-left: 130px;
+        .pwd {
+    width: 90%;
     padding: 10px;
     margin-top: 10px;
+    margin-left: 20px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
      }
-     .Envoye {
-        display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-  
-    background-color:rgb(51, 199, 249);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-   }
+
    .annule{
    text-decoration: none;
     padding: 10px 20px;
     font-size: 12px;
     font-weight: bold;
     background-color:rgb(253, 255, 255);
-    color:rgb(51, 199, 249);
-    border: 2px solid  rgb(37, 199, 252);;
+    color:rgb(51, 249, 54);
+    border: 3px solid rgb(51, 249, 54);
     border-radius: 4px;
     cursor: pointer;
+     margin-left: 380px;
+   }
+    .annule:hover{
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color:rgb(51, 249, 54);
+    color:rgb(255, 255, 255);
+    border:none;
+    border-radius: 4px;
+    cursor: pointer;
+     margin-left: 380px;
    }
    p{
     margin: 10px 20px ;
 
    }
-   .label-code {
-            font-size: 16px;
-            margin:0 5px 5px 130px;
+   .label{
+            font-size: 15px;
+            margin:5px 5px 0px 20px;
             display: block;
         }
      </style>
@@ -91,16 +94,19 @@
     </header>
     <div class="contenu">
          <div class="reset-pwd">
-            <img src="static/images/code.jpg" alt="Logo" class="logo-pwd">
-             <h2>Code de vérification</h2>
-        
-             <p>&nbsp;&nbsp;&nbsp;Veuillez entrer le code de vérification que vous avez reçu par e-mail pour réinitialiser votre mot de passe.</p>
-             <form method="POST" action="/verification-code">
-                <label for="verification-code" class="label-code">Code :</label>
-                <input type="text" id="code" name="code"class="code" required placeholder="Entrez votre code" >
-                <div style="margin-left: 280px;"> <a href="/" class="annule">Annuler</a>
-                <button type="submit" class="Envoye">Valider</button></div>
-            </form>
+            <img src="static/images/change.webp" alt="Logo" class="logo-pwd">
+             <h2>Réinitialiser votre mot de passe</h2>
+<form method="POST" action="/changer_motdepasse">
+  <label class="label" for="new-password">Nouveau mot de passe :</label>
+  <input type="password" id="new-password" name="new_password" class="pwd" required placeholder="Nouveau mot de passe" />
+
+  <label for="confirm-password" class="label" >Confirmer le mot de passe :</label>
+  <input type="password" id="confirm-password" class="pwd" name="confirm_password" required placeholder="Confirmez le mot de passe" />
+
+  <div style="margin-top: 20px;">
+    <button type="submit" class="annule">Modifier</button>
+  </div>
+</form>
 
          </div>
     </div>

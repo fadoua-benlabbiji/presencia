@@ -22,6 +22,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #e6f0ff;
     color: #333;
+
 }
 
 /* Barre d'en-tête */
@@ -38,7 +39,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center; /* Centré */
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .logo-icon {
@@ -73,7 +74,7 @@ body {
 
 /* Section Héros */
 .hero {
-    height: 80vh;
+    height: 83.8vh;
     display: flex;
     align-items: center;
     justify-content: center;

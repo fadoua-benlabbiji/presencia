@@ -1,0 +1,328 @@
+{% extends "principale.html" %}
+
+{% block title %}Accueil {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='listePresence.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  <div class="header">
+    <h1 class="titre_page">Tableau de Suivi des Présences Quotidiennes</h1>
+    <div class="date-actuel">{{date_aujourdhui}}</div>
+  </div>
+
+  <div class="content-container">
+    <div class="stats-container">
+      <div class="stats-card total">
+        <div class="stats-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stats-info">
+          <div class="stats-value">
+            {% set i = namespace(value=0) %}
+              {% for p in presences %}
+                {% set i.value = i.value + 1 %}
+               {%endfor%}  
+               {%print(i.value)%}
+            </div>
+          <div class="stats-label">Employés</div>
+        </div>
+      </div>
+
+      <div class="stats-card present">
+        <div class="stats-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="stats-info">
+          <div class="stats-value"> 
+            {% set comp = namespace(value=0) %}
+              {% for p in presences %}
+                {% if(p.statut=='présent')%}
+                  {% set comp.value = comp.value + 1 %}
+                {%endif%}
+              {%endfor%}  
+               {{comp.value}}</div>
+          <div class="stats-label">Présents</div>
+          {% if i.value != 0 %}
+      <div class="stats-percentage">{{ ((comp.value / i.value) * 100) | round(2, 'floor') }}%</div>
+    {% else %}
+      <div class="stats-percentage">0%</div>
+    {% endif %}
+        </div>
+      </div>
+
+      <div class="stats-card absent">
+        <div class="stats-icon">
+          <i class="fas fa-times-circle"></i>
+        </div>
+        <div class="stats-info">
+          <div class="stats-value">
+              {% set comp = namespace(value=0) %}
+              {% for p in presences %}
+                {% if(p.statut=='absent')%}
+                  {% set comp.value = comp.value + 1 %}
+                {%endif%}
+              {%endfor%}  
+               {{comp.value}}
+          </div>
+          <div class="stats-label">Absents</div>
+          {% if i.value != 0 %}
+    <div class="stats-percentage">{{ ((comp.value / i.value) * 100) | round(2, 'floor') }}%</div>
+  {% else %}
+    <div class="stats-percentage">0%</div>
+  {% endif %}
+        </div>
+      </div>
+
+      <div class="stats-card retard">
+        <div class="stats-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="stats-info">
+          <div class="stats-value">
+               {% set comp = namespace(value=0) %}
+              {% for p in presences %}
+                {% if(p.statut=='en retard')%}
+                  {% set comp.value = comp.value + 1 %}
+                {%endif%}
+              {%endfor%}  
+               {{comp.value}}
+          </div>
+          <div class="stats-label">Retardataires</div>
+          {% if i.value != 0 %}
+    <div class="stats-percentage">{{ ((comp.value / i.value) * 100) | round(2, 'floor') }}%</div>
+  {% else %}
+    <div class="stats-percentage">0%</div>
+  {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <div class="table-header">
+        <h2>Liste des présences</h2>
+      <div class="table-actions">
+  <div class="filtre_par_date">
+  <form action="/filtrage-presences" method="POST"  style="display: flex; align-items: center;">
+    <input type="date" id="dateFilter" name="date" value="{{ date_selectionnee }}">
+    <button class="btn filter" type="submit">
+      <i class="fas fa-filter"></i> Filtrer
+    </button>
+  </form>
+  </div>
+<a href="javascript:void(0);" class="btn add-btn" title="Ajouter une présence manuelle" onclick="ouvrirPopupAjout()">
+  <i class="fas fa-user-plus"></i> Ajouter
+</a>
+
+  <a class="btn export-btn" href="/export_presence">
+    <i class="fas fa-file-export" ></i> Exporter
+  </a>
+  
+  <a class="btn statistique-btn" href="/statistique">
+    <i class="fas fa-chart-bar"></i> Statistiques
+  </a>
+  
+  <div class="search">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Rechercher..." id="searchInput" onkeyup="searchEmployee()">
+  </div>
+</div>
+      </div>
+
+      <div class="table-responsive">
+        <table id="presence" class="presence-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nom complet</th>
+              <th>date presence</th>
+              <th>Heure d'entrée</th>
+              <th>Statut</th>
+              <th>Mode</th>
+              <th>Commentaire</th>
+
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+             {% set i = namespace(value=1) %}
+              {% for p in presences %}
+            <tr>
+              <td>{{i.value}}</td>
+              <td>{{p.employe.nom_complet}}</td>
+              <td>{{p.date_presence}}</td>
+              <td>{{p.heure_entree}}</td>
+                <td><span class="{%if p.statut=='présent'%} 
+                      status-badge present
+                   {%elif p.statut=='absent'%} 
+                      status-badge absent 
+                   {%elif p.statut =='en retard'%} 
+                      status-badge retard 
+                   {%endif%} " >{{p.statut }}</span></td> 
+              <td style="font-family:'Times New Roman', Times, serif">{{p.mode}}</td>
+              <td>{{p.commentaire}}</td>
+              
+              <td>
+                <button class="action-btn edit-btn" onclick="ouvrirPopupCommentaire('{{ p.id }}', '{{ p.commentaire | escape }}')" title="Modifier le commentaire">
+  <i class="fas fa-edit" style="color: #007bff;"></i>
+</button>
+                  <button class="action-btn delete-btn" onclick="confirmerSuppression('{{ p.id }}')"
+        title="Supprimer la présence">
+    <i class="fas fa-trash" style="color:red;"></i>
+  </button>
+
+              </td>
+            </tr>
+       {% set i.value = i.value + 1 %}
+        {%endfor%}
+           
+          </tbody>
+        </table>
+        {% if presences|length == 0 %}
+  <div id="noPresenceMessage" style="text-align:center; margin-top: 20px; color: rgb(77, 76, 76); font-weight: bold;">
+    Aucune présence enregistrée
+  </div>
+{% endif %}
+         <div id="noResultsMessage" style="display:none; text-align:center; margin-top: 20px; color: rgb(77, 76, 76);">
+  Aucun résultat trouvé
+</div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="popupCommentaire" class="popup" style="display:none;">
+  <div class="popup-content">
+    <span class="close-btn" onclick="fermerPopupCommentaire()">&times;</span>
+    <h2>Modifier le commentaire</h2>
+    <form id="formCommentaire" method="POST" action="/modifier_commentaire">
+      <input type="hidden" name="presence_id" id="commentaire_id">
+      <label for="commentaire_text">Commentaire :</label>
+      <textarea name="commentaire" id="commentaire_text" rows="4" required></textarea>
+      <button type="submit" class="btn">Enregistrer</button>
+    </form>
+  </div>
+</div>
+<div id="popupAjoutPresence" class="popup" style="display:none;">
+  <div class="popup-content" onclick="event.stopPropagation();">
+    <span class="close-btn" onclick="fermerPopupAjoutPresence()">&times;</span>
+    <h2>Ajouter une présence manuelle</h2>
+    <form method="POST" action="/ajouter_presence_manuellement">
+      <label for="employe_id">Employé :</label>
+      <select name="employe_id" required>
+        {% for emp in employes %}
+          <option value="{{ emp.id }}">{{ emp.nom_complet }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="date_presence">Date :</label>
+      <input type="date" name="date_presence" required>
+
+      <label for="heure_entree">Heure d'entrée :</label>
+      <input type="time" name="heure_entree" required>
+
+      <label for="statut">Statut :</label>
+      <select name="statut" required>
+        <option value="présent">Présent</option>
+        <option value="absent">Absent</option>
+        <option value="en retard">En retard</option>
+      </select>
+
+      <label for="mode">Mode :</label>
+      <input type="text" name="mode" value="manuel" readonly>
+
+      <label for="commentaire">Commentaire :</label>
+      <textarea name="commentaire" rows="3">-----</textarea>
+
+      <button type="submit" class="btn">Ajouter</button>
+    </form>
+  </div>
+</div>
+<script>
+  function ouvrirPopupAjout() {
+  document.getElementById("popupAjoutPresence").style.display = "flex";
+}
+
+function fermerPopupAjoutPresence() {
+  document.getElementById("popupAjoutPresence").style.display = "none";
+}
+
+// Fermer si clic dehors
+window.addEventListener('click', function(event) {
+  const popupAjout = document.getElementById("popupAjoutPresence");
+  if (event.target === popupAjout) {
+    popupAjout.style.display = "none";
+  }
+});
+
+</script>
+<script>
+  function ouvrirPopupCommentaire(id, commentaire) {
+    document.getElementById("commentaire_id").value = id;
+    document.getElementById("commentaire_text").value = commentaire;
+    document.getElementById("popupCommentaire").style.display = "flex";
+  }
+
+  function fermerPopupCommentaire() {
+    document.getElementById("popupCommentaire").style.display = "none";
+  }
+    window.addEventListener('click', function(event) {
+    var popup = document.getElementById("popupCommentaire");
+    if (event.target === popup) {
+      popup.style.display = "none";
+    }
+     });
+</script>
+<script>
+
+function searchEmployee() {
+  var input = document.getElementById("searchInput");
+  var filter = input.value.toUpperCase();
+  var table = document.getElementById("presence");
+  var tr = table.getElementsByTagName("tr");
+  var ligne=document.getElementById("noResultsMessage")
+  var trouve = false;
+
+  for (var i = 1; i < tr.length; i++) {
+    var tds = tr[i].getElementsByTagName("td");
+    var ligneVisible = false;
+
+    for (var j = 0; j < tds.length; j++) {
+      var td = tds[j];
+      if (td && td.textContent.toUpperCase().includes(filter)) {
+        ligneVisible = true;
+        break;
+      }
+    }
+
+    if (ligneVisible) {
+      tr[i].style.display = "";
+      trouve = true;
+  
+    } else {
+      tr[i].style.display = "none";
+      ligne.style.display=""
+    }
+  }
+  
+  // Afficher ou cacher le message "Aucun résultat"
+  if (trouve) {
+    table.style.display = "table";
+    noResultsMessage.style.display = "none";
+  } else {
+    ligne.style.display = "block";
+  }
+}
+</script>
+<script>
+  function confirmerSuppression(presenceId) {
+    if (confirm("Voulez-vous vraiment supprimer cette présence ?")) {
+      window.location.href = "/supprimer_presence/" + presenceId;
+    }
+  }
+  
+</script>
+{% endblock %}

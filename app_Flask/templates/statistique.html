@@ -1,0 +1,158 @@
+
+{% extends "principale.html" %}
+
+{% block title %}statistique {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='statistique.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{%endblock%}
+{% block content %}
+<div class="stats">
+  <div class="stats-header">
+    <h2>📊 Statistiques de Présence</h2> 
+    <div class="filterage">
+      <!-- Filtre par date -->
+      <div class="filtre-group">
+          <label for="filtre-type">Filtrer par :</label>
+       
+        <label for="date-filtre">Filtrer par date :</label>
+        <input type="date" id="date-filtre" name="date-filtre" value="{{ selected_date }}">
+      </div>
+      <button class="apply-filter">Appliquer</button>
+    </div>
+
+  </div>
+  <div class="meme-ligne">
+  <div class="chart-container">
+  <h3>Répartition des présences</h3>
+  <div class="pie-chart-wrapper">
+    <canvas id="pieChart"></canvas>
+  </div>
+  <div class="chart-legend">
+    <div class="legend-item"><span class="color-present"></span> Présent</div>
+    <div class="legend-item"><span class="color-absent"></span> Absent</div>
+    <div class="legend-item"><span class="color-late"></span> Retard</div>
+  </div>
+</div>
+ <div class="absentees-container">
+<h2>🏆 Top 5 des absents ce mois</h2>
+        
+        <div class="absentees-list" id="absenteesList">
+            <!-- Le contenu sera généré par JavaScript -->
+        </div>
+        
+        <div class="month-selection">
+            <label for="month-select">Mois :</label>
+            <select id="month-select" onchange="loadAbsenteesData()">
+                <option value="2023-06">Juin 2023</option>
+                <option value="2023-05">Mai 2023</option>
+                <option value="2023-04">Avril 2023</option>
+            </select>
+        </div>
+    </div>
+    </div>
+<div class="courbe">
+  <h2>Évolution mensuelle</h2>
+  <div class="line-chart-wrapper">
+    <canvas id="monthlyChart"></canvas>
+  </div>
+  <div class="chart-legend">
+    <div class="legend-item"><span class="color-present"></span> Présences</div>
+    <div class="legend-item"><span class="color-absent"></span> Absences</div>
+    <div class="legend-item"><span class="color-late"></span> Retards</div>
+  </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('pieChart').getContext('2d');
+  
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Présent', 'Absent', 'Retard'],
+      datasets: [{
+        data: [65, 15, 20], // Remplacez par vos données réelles
+        backgroundColor: [
+          '#4CAF50',
+          '#F44336',
+          '#FFC107'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false // On utilise notre légende personnalisée
+        }
+      }
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('monthlyChart').getContext('2d');
+  
+  // Données exemple - À remplacer par vos données réelles
+  const joursDuMois = Array.from({length: 30}, (_, i) => (i + 1) + ' Juin');
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: joursDuMois,
+      datasets: [
+        {
+          label: 'Présences',
+          data: [65, 59, 80, 81, 56, 55, 70, 75, 82, 78, 76, 80, 85, 88, 82, 78, 75, 72, 80, 82, 85, 87, 90, 89, 86, 82, 85, 88, 90, 92],
+          borderColor: '#4CAF50',
+          backgroundColor: 'rgba(76, 175, 80, 0.1)',
+          tension: 0.3,
+          fill: true
+        },
+        {
+          label: 'Absences',
+          data: [5, 8, 5, 3, 12, 8, 4, 2, 3, 6, 4, 2, 1, 0, 3, 5, 8, 10, 5, 3, 2, 1, 0, 2, 3, 5, 2, 1, 0, 1],
+          borderColor: '#F44336',
+          backgroundColor: 'rgba(244, 67, 54, 0.1)',
+          tension: 0.3,
+          fill: true
+        },
+        {
+          label: 'Retards',
+          data: [10, 5, 8, 7, 4, 9, 8, 5, 7, 8, 12, 10, 6, 4, 7, 9, 5, 6, 7, 8, 5, 4, 2, 3, 5, 8, 5, 3, 2, 1],
+          borderColor: '#FFC107',
+          backgroundColor: 'rgba(255, 193, 7, 0.1)',
+          tension: 0.3,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: "Nombre d'employés"
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: "Jours du mois"
+          }
+        }
+      }
+    }
+  });
+});
+</script>
+{% endblock %}

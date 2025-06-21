@@ -1,66 +1,451 @@
+/* Admin.css - Style moderne et simple */
+
+/* Reset de base */
+
+/* Conteneur principal */
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Carte admin (photo + infos) */
 .admin-card {
-    background: white;
-    border-radius: 15px;
-    padding: 15px;
-    width: 100%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-  .admin-info {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.admin-info {
     display: flex;
+    flex-direction: column;
     align-items: center;
-  }
-  
-  .admin-img {
-    width: 110px;
-    height: 110px;
+    text-align: center;
+}
+
+.image-cont {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.admin-img {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin: 0 60px 0 50px;
-    border: 2px solid #000000;
-  }
-  .nom{
-        font-size: 30px;
-        margin-bottom: 5px;
-        font-weight: bold;
-        color:#000000 ;
-  }
-  
+    border: 4px solid #f0f2f5;
+}
+
 .camera-label {
     position: absolute;
-  bottom: 3px;
-  left: 60%;
-    margin-top: 5px;
-    cursor: none;
+    bottom: 10px;
+    right: 10px;
+    background: #4e73df;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.camera-label:hover {
+    background: #3a5bc7;
+    transform: scale(1.1);
+}
+
+.nom {
+    font-size: 1.5rem;
+    color: #2d3748;
+    margin-bottom: 5px;
+}
+
+.role {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+/* Conteneur des infos et paramètres */
+.info-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.info-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.bloc1 h3, .bloc2 h3 {
+    color: #2d3748;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Grille d'informations */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.info-item {
+    background: #f8f9fa;
+    padding: 12px 15px;
+    border-radius: 8px;
+}
+
+.info-label {
+    display: block;
+    color: #4a5568;
+    font-size: 0.85rem;
+    margin-bottom: 3px;
+}
+
+.info-value {
+    color: #2d3748;
+    font-weight: 500;
+}
+
+/* Boutons */
+.edit-btn {
+    background: #4e73df;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 0;
+    transition: background 0.3s;
+}
+
+.edit-btn:hover {
+    background: #3a5bc7;
+}
+
+/* Formulaire d'édition */
+.edit-form {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #edf2f7;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    color: #4a5568;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: #f8f9fa;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.cancel-btn {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.save-btn {
+    background: #38a169;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Paramètres système */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.setting-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+}
+
+.setting-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.bg-primary {
+    background: #4e73df;
+}
+
+.bg-warning {
+    background: #ed8936;
+}
+
+.bg-info {
+    background: #4299e1;
+}
+
+.setting-content {
+    flex: 1;
+}
+
+.setting-content h4 {
+    color: #2d3748;
+    margin-bottom: 5px;
+}
+
+.setting-content p {
+    color: #718096;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.action-btn {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+}
+
+.action-btn i {
+    font-size: 0.8rem;
+}
+
+.primary {
+    background: #4e73df;
+    color: white;
+}
+
+.primary:hover {
+    background: #3a5bc7;
+}
+
+.warning {
+    background: #ed8936;
+    color: white;
+}
+
+.warning:hover {
+    background: #dd6b20;
+}
+
+.info {
+    background: #4299e1;
+    color: white;
+}
+
+.info:hover {
+    background: #3182ce;
+}
+
+/* Modals */
+.modal {
+    display: none; /* Enlever le display: flex qui était là */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    margin-top: 20px; /* Ajout pour l'espace sur petits écrans */
+    margin-left: 450px;
+    overflow-y: auto;
+}
+
+.modal-content.large {
+    max-width: 700px;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #edf2f7;
+    display: flex;
+    justify-content: space-between; /* Rétablir l'alignement normal */
+    align-items: center;
+    text-align: center; /* Centrer le texte */
+}
+
+
+.modal-header h3 {
     color: #000000;
-    font-size: 18px;
-    transition: color 0.3s ease;
-  }
- 
-  .image-cont{
-     position: relative;
-     display: inline-block;
-  }
-  .info-card {
-   margin-top: 15px;
-   text-align: center;
-  }
-  .bloc1{
-    margin-left: 20px;
-    display: inline-block;
-    background: white;
-    border-radius: 15px;
-    padding: 15px;
-    width: 30%;
-    height: 500px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-  .bloc2{
-    display: inline-block;
-    background: white;
-    border-radius: 15px;
-    padding: 15px;
-    margin-left: 20px;
-    width: 60%;
-    height: 500px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto; /* Centrer le titre */
+    width: fit-content;
+    margin-top: 20px;
+    
+}
+
+.close-btn {
+    color: #1b1b1c;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #4a5568;
+}
+
+.modal-form {
+    padding: 20px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Liste des activités */
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.activity-item {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4e73df;
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-content h4 {
+    color: #2d3748;
+    font-size: 1rem;
+    margin-bottom: 3px;
+}
+
+.activity-content p {
+    color: #718096;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.activity-date {
+    color: #a0aec0;
+    font-size: 0.75rem;
+}
+
+.no-activities {
+    color: #718096;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.activity-profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}

@@ -18,9 +18,8 @@
      
         <nav>
             <ul class="nav-links">
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Connexion</a></li>
-                <li><a href="#">À propos</a></li>
+                <li id="connect"><a href="/login">Connexion</a></li>
+                <li><a href="/propos">À propos</a></li>
             </ul>
         </nav>
     </header>
@@ -68,8 +67,8 @@
    
 
        <form method="POST" action="/login">
-          <label for="username">Email</label> 
-          <input type="text" name="username" placeholder="Username" required><br>
+          <label for="username">Nom d'utilisateur</label> 
+          <input type="text" name="username" placeholder="Nom d'utilisateur" required><br>
           <label for="password">Mot de passe</label> 
           <div class="password-wrapper">
             <input type="password" id="password" name="password" placeholder="Mot de passe" required>
@@ -83,11 +82,23 @@
       
     </div>
   </div>
-
-  
+{% if request.args.get('msg') == 'success_password' %}
+  <script>
+    alert("Mot de passe modifié avec succès.");
+  </script>
+{% elif request.args.get('msg') == 'error_password' %}
+  <script>
+    alert("Erreur lors de la modification du mot de passe.");
+  </script>
+{% endif %}
   <script>
     // Ouvrir la pop-up
     document.getElementById('openLogin').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('loginModal').style.display = 'block';
+    });
+        // Ouvrir la pop-up
+    document.getElementById('connect').addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById('loginModal').style.display = 'block';
     });

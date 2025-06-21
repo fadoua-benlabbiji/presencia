@@ -19,8 +19,8 @@
   <a class="btn-importer" href="/export_excel"><i class="fas fa-file-excel"></i> Exporter (Excel)</a>
 </div>
 
- <table style="height: 300px; overflow-y: auto;">
-  <thread>
+ <table style="overflow-y: auto;" id="table">
+  <thead>
   <tr>
     <th>N°</th>
     <th>Photo</th>
@@ -88,30 +88,80 @@
   </div>
 </div> 
 <!-- Popup ajout -->
-<div id="myModal" class="modal">
+<div id="myModal" class="modal" >
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Ajouter un nouveau employé</h2>
-    <span class="close">&times;</span>
-    <h2>Ajouter un nouvel employé</h2>
-    <form>
-      <div class="form-group">
-        <label for="image">Photo :</label>
-        <input type="file" id="image" name="image">
+    <div class="modal-header">
+      <h2>Ajouter un nouvel employé</h2>
+      <span class="close"></span>
+    </div>
+    
+    <form class="employee-form" action="/ajouter" method="POST" enctype="multipart/form-data">
+      <div class="form-columns">
+        <!-- Colonne de gauche -->
+        <div class="form-column">
+          <div class="form-group photo-upload">
+            <div class="photo-preview" id="photoPreview">
+              <i class="fas fa-user-plus"></i>
+            </div>
+           <label for="image" class="upload-btn">
+              <i class="fas fa-camera"></i><p>Choisir une photo</p>
+              <input type="file" id="image" name="image" accept="image/*" hidden>
+            </label>
+          </div>
+          
+          <div class="form-group">
+            <label for="matricule">Matricule</label>
+            <input type="text" id="matricule" name="matricule" placeholder="MAT001">
+          </div>
+              <div class="form-group">
+            <label for="date_embauche">Date d'embauche</label>
+            <input type="date" id="date_embauche" name="date_embauche">
+          </div>
+          
+          <div class="form-group">
+            <label for="statut">Statut</label>
+            <select id="statut" name="statut">
+              <option value="actif">Actif</option>
+              <option value="en congé">En congé</option>
+              <option value="inactif">Inactif</option>
+            </select>
+          </div>
+        </div>
+        <!-- Colonne de droite -->
+        <div class="form-column">
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" placeholder="Dupont">
+          </div>
+          
+          <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" placeholder="Jean">
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jean.dupont@example.com">
+          </div>
+          <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" placeholder="06 12 34 56 78">
+          </div>
+          
+          <div class="form-group">
+            <label for="poste">Poste</label>
+            <input type="text" id="poste" name="poste" placeholder="Développeur">
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom">
-      </div>
-      <div class="form-group">
-        <label for="prenom">Prénom :</label>
-        <input type="text" id="prenom" name="prenom">
-      </div>
-      <div class="button-group">
-        <button type="submit" class="btn-add">Ajouter</button>
-        <button type="button" class="btn-cancel">Annuler</button>
+       <button type="reset" onclick="fermerPopupajout()" class="btn-cancel"> Annuler
+        </button>
+        <button type="submit" class="btn-add">
+          <i class="fas fa-user-plus"></i> Ajouter l'employé
+        </button>
       </div>
     </form>
+    
   </div>
 </div>
 <!-- Popup Modification Employé -->
@@ -150,8 +200,8 @@
         <option value="inactif">Inactif</option>
       </select><br><br>
 <div class="btns-popup">
-  <button type="submit" class="oui">Enregistrer</button>
   <button type="button" onclick="fermerPopupModif()" class="non">Annuler</button>
+  <button type="submit" class="oui">Enregistrer</button>
 </div>
     </form>
   </div>
@@ -159,6 +209,10 @@
 
   </tbody>
  </table>
+ <div id="noResultsMessage" style="display:none; text-align:center; margin-top: 300px; color: gray;">
+  Aucun résultat trouvé
+</div>
+
 <script>
   let matriculeASupprimer = "";
 
@@ -178,14 +232,45 @@
 </script>
 <script>
 function searchEmployee() {
-  const input = document.getElementById("searchInput").value.toLowerCase();
-  const rows = document.querySelectorAll("table tbody tr");
+  var input = document.getElementById("searchInput");
+  var filter = input.value.toUpperCase();
+  var table = document.getElementById("table");
+  var tr = table.getElementsByTagName("tr");
 
-  rows.forEach(row => {
-    const rowText = row.innerText.toLowerCase();
-    row.style.visibility = rowText.includes(input) ? "visible" : "hidden";
-  });
+  var trouve = false;
+
+  for (var i = 1; i < tr.length; i++) {
+    var tds = tr[i].getElementsByTagName("td");
+    var ligneVisible = false;
+
+    for (var j = 0; j < tds.length; j++) {
+      var td = tds[j];
+      if (td && td.textContent.toUpperCase().includes(filter)) {
+        ligneVisible = true;
+        break;
+      }
+    }
+
+    if (ligneVisible) {
+      tr[i].style.display = "";
+      trouve = true;
+    } else {
+      tr[i].style.display = "none";
+    }
+  }
+
+  // Afficher ou cacher le message "Aucun résultat"
+  var noResultsMessage = document.getElementById("noResultsMessage");
+  if (trouve) {
+    table.style.display = "table";
+    noResultsMessage.style.display = "none";
+  } else {
+    table.style.display = "none";
+    noResultsMessage.style.display = "block";
+  }
 }
+
+
 </script>
 <script>
 function ouvrirPopupModif(button) {
@@ -222,6 +307,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 function fermerPopupModif() {
   document.getElementById('popup-modif').style.display = 'none';
+}
+function fermerPopupajout() {
+  document.getElementById('myModal').style.display = 'none';
 }
 </script>
 <script>
